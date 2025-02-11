@@ -1,23 +1,39 @@
+using Airline_Booking_Api.Data.Models;
+using Airline_Booking_Api.DbContexts;
+using Airline_Booking_Api.Utils;
+using Microsoft.AspNetCore.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<AirlineBookingDbContext>();
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication().AddCookie();
+
+builder.Services.AddIdentityApiEndpoints<User>()
+    .AddEntityFrameworkStores<AirlineBookingDbContext>()
+    .AddApiEndpoints();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.MapIdentityApi<User>();
 
 app.MapControllers();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.ApplyMigrations();
+}
 
 app.Run();

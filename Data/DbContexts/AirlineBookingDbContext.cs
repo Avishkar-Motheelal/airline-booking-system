@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Airline_Booking_Api.Data;
+﻿using Airline_Booking_Api.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Route = Airline_Booking_Api.Data.Route;
+using Route = Airline_Booking_Api.Data.Models.Route;
 
 namespace Airline_Booking_Api.DbContexts;
 
-public partial class AirlineBookingDbContext : DbContext
+public partial class AirlineBookingDbContext : IdentityDbContext<User>
 {
     public AirlineBookingDbContext()
     {
@@ -38,11 +37,18 @@ public partial class AirlineBookingDbContext : DbContext
     public virtual DbSet<Seat> Seats { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=AirlineBookingDB;Encrypt=false;User Id=test;password=test");
+    {
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("Database"));
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Aircraft>(entity =>
         {
             entity.HasKey(e => e.AircraftId).HasName("PK__aircraft__04015399335624B0");
@@ -226,7 +232,7 @@ public partial class AirlineBookingDbContext : DbContext
                 .HasConstraintName("FK__seats__aircraft___46E78A0C");
         });
 
-        OnModelCreatingPartial(modelBuilder);
+        this.OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
