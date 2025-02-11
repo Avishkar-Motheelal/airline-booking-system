@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Airline_Booking_Api.Data.Models;
 
-namespace Airline_Booking_Api.Data;
-
-public partial class PassengerBooking
+public class PassengerBooking
 {
     public int PassengerBookingId { get; set; }
 

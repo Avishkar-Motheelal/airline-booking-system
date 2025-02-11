@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Airline_Booking_Api.Data;
+﻿namespace Airline_Booking_Api.Data.Models;
 
 public partial class Flight
 {

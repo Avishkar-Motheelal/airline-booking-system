@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Airline_Booking_Api.Data.Models;
 
-namespace Airline_Booking_Api.Data;
-
-public partial class FlightStatus
+public class FlightStatus
 {
     public int FlightStatusId { get; set; }
 
