@@ -1,5 +1,5 @@
+using Airline_Booking_Api.Data.DbContexts;
 using Airline_Booking_Api.Data.Models;
-using Airline_Booking_Api.DbContexts;
 using Airline_Booking_Api.Utils;
 using Microsoft.AspNetCore.Identity;
 
@@ -15,10 +15,10 @@ builder.Services.AddDbContext<AirlineBookingDbContext>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication().AddCookie();
-
-builder.Services.AddIdentityApiEndpoints<User>()
-    .AddEntityFrameworkStores<AirlineBookingDbContext>()
-    .AddApiEndpoints();
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddApiEndpoints()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AirlineBookingDbContext>();
 
 var app = builder.Build();
 

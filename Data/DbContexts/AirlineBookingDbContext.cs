@@ -1,11 +1,13 @@
 ﻿using Airline_Booking_Api.Data.Models;
+using Airline_Booking_Api.Data.SeedConfiguration;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Route = Airline_Booking_Api.Data.Models.Route;
 
-namespace Airline_Booking_Api.DbContexts;
+namespace Airline_Booking_Api.Data.DbContexts;
 
-public partial class AirlineBookingDbContext : IdentityDbContext<User>
+public partial class AirlineBookingDbContext : IdentityDbContext<User, IdentityRole, string>
 {
     public AirlineBookingDbContext()
     {
@@ -49,6 +51,8 @@ public partial class AirlineBookingDbContext : IdentityDbContext<User>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfiguration(new RoleSeeder());
+
         modelBuilder.Entity<Aircraft>(entity =>
         {
             entity.HasKey(e => e.AircraftId).HasName("PK__aircraft__04015399335624B0");

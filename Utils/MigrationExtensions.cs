@@ -1,4 +1,4 @@
-﻿using Airline_Booking_Api.DbContexts;
+﻿using Airline_Booking_Api.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline_Booking_Api.Utils;
