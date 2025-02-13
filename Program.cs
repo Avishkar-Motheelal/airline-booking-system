@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Airline_Booking_Api.Data.DbContexts;
 using Airline_Booking_Api.Data.Models;
 using Airline_Booking_Api.Utils;
@@ -19,6 +20,9 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddApiEndpoints()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AirlineBookingDbContext>();
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
 var app = builder.Build();
 

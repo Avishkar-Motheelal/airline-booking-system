@@ -1,6 +1,8 @@
-﻿namespace Airline_Booking_Api.Data.Models;
+﻿using Airline_Booking_Api.Data.Models.Dtos;
 
-public partial class Aircraft
+namespace Airline_Booking_Api.Data.Models;
+
+public class Aircraft
 {
     public int AircraftId { get; set; }
 
@@ -13,4 +15,15 @@ public partial class Aircraft
     public virtual ICollection<Flight> Flights { get; set; } = new List<Flight>();
 
     public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
+
+    public AircraftDto ToDto()
+    {
+        return new()
+        {
+            AircraftId = this.AircraftId,
+            EconomySeats = this.EconomySeats,
+            FirstClassSeats = this.FirstClassSeats,
+            AircraftType = this.AircraftType
+        };
+    }
 }
