@@ -52,6 +52,7 @@ public partial class AirlineBookingDbContext : IdentityDbContext<User, IdentityR
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new RoleSeeder());
+        modelBuilder.ApplyConfiguration(new FlightStatusSeeder());
 
         modelBuilder.Entity<Aircraft>(entity =>
         {
