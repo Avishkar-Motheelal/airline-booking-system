@@ -76,7 +76,7 @@ public class AircraftController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Aircraft>> PostAircraft(AircraftCreateDto aircraftDto)
     {
-        var aircraft = aircraftDto.ToAircraft();
+        var aircraft = aircraftDto.ToModel();
         this._context.Aircraft.Add(aircraft);
 
         this.GenerateSeats(ref aircraft);

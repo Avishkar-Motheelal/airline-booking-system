@@ -8,7 +8,7 @@ public class AircraftCreateDto
 
     public string AircraftType { get; set; } = null!;
 
-    public Aircraft ToAircraft()
+    public Aircraft ToModel()
     {
         return new()
         {
