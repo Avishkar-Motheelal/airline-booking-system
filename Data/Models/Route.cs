@@ -1,4 +1,6 @@
-﻿namespace Airline_Booking_Api.Data.Models;
+﻿using Airline_Booking_Api.Data.Models.Dtos;
+
+namespace Airline_Booking_Api.Data.Models;
 
 public class Route
 {
@@ -13,4 +15,14 @@ public class Route
     public virtual Airport DestinationAirport { get; set; } = null!;
 
     public virtual ICollection<Flight> Flights { get; set; } = new List<Flight>();
+
+    public RouteDto ToDto()
+    {
+        return new()
+        {
+            RouteId = this.RouteId,
+            DepartureAirportId = this.DepartureAirportId,
+            DestinationAirportId = this.DestinationAirportId
+        };
+    }
 }
